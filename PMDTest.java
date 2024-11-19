@@ -56,7 +56,7 @@ public class PMDTest {
 
         System.out.println(array[6]);
 
-        int[] array = {1,2,3};
+        int[] array_one = {1,2,3};
 
         System.out.println(array[8]);
 
