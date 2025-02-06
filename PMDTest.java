@@ -18,7 +18,7 @@ public class PMDTest {
 
         String name = null;
 
-        if (name.equals("PMD")) {  // This line can throw a NullPointerException
+        if (name.equals("PMD")) {  // NullPointerException
 
             System.out.println("Name matches PMD");
 
@@ -44,7 +44,7 @@ public class PMDTest {
 
         for (int i = 0; i < 10; i++) {
 
-            Random random = new Random();  // Should not create new Random inside loop
+            Random random = new Random();//Mo new Random inside loop
 
             System.out.println(random.nextInt());
 
