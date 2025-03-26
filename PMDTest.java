@@ -13,10 +13,6 @@ public class PMDTest {
 
 
     public static void main(String[] args) {
-
-        // missing closing parenthesis and semicolon
-
-        System.out.println("Hello, world!"  
                            
 
         // Null assignment leading to potential NullPointerException
