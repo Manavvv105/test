@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class PMDTest {
 
     public void test() {
@@ -5,7 +7,7 @@ public class PMDTest {
         System.out.println("Logging in..."); // SystemPrintln
 
         int[] arr = {1, 2, 3};
-        for (int i = 0; i <= arr.length; i++) { // AvoidArrayIndexOutOfBounds
+        for (int i = 0; i <= arr.length; i++) { // Off-by-one
             System.out.println(arr[i]);
         }
 
