@@ -1,19 +1,39 @@
+import java.util.Random;
+
 public class PMDTest {
 
-    // Unused constant
-    private static final String UNUSED = "I am never used";  // PMD: UnusedLocalVariable
+    // Unused variable
+    private static final String UNUSED_CONSTANT = "Not used"; // UnusedLocalVariable
 
     public static void main(String[] args) {
-        // Hardcoded password
-        String password = "admin123";  // PMD: HardcodedPassword
 
-        // Off-by-one loop
-        int[] numbers = {1, 2, 3};
-        for (int i = 0; i <= numbers.length; i++) {  // PMD: AvoidArrayIndexOutOfBounds
-            System.out.println(numbers[i]);          // PMD: SystemPrintln
+        // Hardcoded password
+        String password = "admin123"; // HardcodedPassword
+
+        // System.out.println usage
+        System.out.println("Starting PMD test..."); // SystemPrintln
+
+        // Inefficient string concatenation in a loop
+        String result = "";
+        for (int i = 0; i < 5; i++) {
+            result += i; // UseStringBufferForStringAppends
         }
 
-        // System.out used
-        System.out.println("End of main.");  // PMD: SystemPrintln
+        // Object creation in loop
+        for (int i = 0; i < 3; i++) {
+            Random r = new Random(); // AvoidInstantiatingObjectsInLoops
+            System.out.println(r.nextInt()); // SystemPrintln again
+        }
+
+        // Array index out of bounds
+        int[] nums = {1, 2, 3};
+        System.out.println(nums[5]); // AvoidArrayIndexOutOfBounds
+
+        // Empty catch block
+        try {
+            int x = 10 / 0;
+        } catch (ArithmeticException e) {
+            // Empty on purpose // EmptyCatchBlock
+        }
     }
 }
