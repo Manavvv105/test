@@ -14,7 +14,7 @@ public class BuggyPMDTest {
             int x = 10 / 0;
         } catch (Exception e) { // AvoidCatchingGenericException + EmptyCatchBlock
         }
-
+        
         // Return from finally block
         try {
             returnFromFinally();
@@ -36,6 +36,12 @@ public class BuggyPMDTest {
         int[] nums = {1, 2, 3};
         System.out.println(nums[5]); // AvoidArrayIndexOutOfBounds
 
+
+        int i = 0;
+        while (i >= 0) { // Infinite loop — i keeps increasing
+            i++;
+        }
+        
         // Using == for strings
         String a = "hello";
         String b = new String("hello");
