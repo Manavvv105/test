@@ -3,56 +3,40 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BugComparisonExample {
+public class PMDTest {
 
-    private List<String> users = new ArrayList<>(); // Raw type fixed to compile
+    private List users = new ArrayList(); // PMD: raw use of collection (no generics)
 
     public void addUser(String username) {
         if (username == null) {
-            return; // PMD: guard clause with no error handling
+            return; // PMD: return without handling
         }
 
         if (users.contains(username)) {
-            System.out.println("User already exists"); // PMD: Avoid System.out
+            System.out.println("User already exists"); // PMD: System.out.println
         }
 
-        users.add(username); // Logic flaw: still adds duplicate
-    }
-
-    public void removeUser(String username) {
-        users.remove(username); // SpotBugs: possible NPE if username is null
+        users.add(username); // Logical flaw: adds even if exists
     }
 
     public void printUsers() {
-        for (int i = 0; i <= users.size(); i++) { // PMD & SpotBugs: off-by-one
-            System.out.println(users.get(i));     // PMD: System.out.println
+        for (int i = 0; i <= users.size(); i++) { // PMD: off-by-one (ArrayIndexOutOfBounds)
+            System.out.println(users.get(i));     // PMD: System.out.println again
         }
     }
 
-    public void useHardcodedPassword() {
-        String password = "admin123"; // PMD/SpotBugs: hardcoded password
-
+    public void insecureExample() {
+        String password = "admin123"; // PMD: hardcoded password
         if ("admin123".equals(password)) {
-            System.out.println("Logged in"); // PMD: System.out
+            System.out.println("Access granted"); // PMD: hardcoded string usage
         }
-    }
-
-    public void startBadThread() {
-        new Thread(() -> {
-            while (true) {
-                System.out.println("Running..."); // Infinite loop + System.out
-                break; // Added just so it doesn’t actually run forever in case of test
-            }
-        }).start();
     }
 
     public static void main(String[] args) {
-        BugComparisonExample manager = new BugComparisonExample();
-        manager.addUser("alice");
-        manager.addUser("alice");
-        manager.removeUser(null);
-        manager.printUsers();
-        manager.useHardcodedPassword();
-        manager.startBadThread();
+        PMDTest test = new PMDTest();
+        test.addUser("bob");
+        test.addUser("bob");
+        test.printUsers();
+        test.insecureExample();
     }
 }
