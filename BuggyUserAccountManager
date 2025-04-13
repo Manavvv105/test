@@ -1,0 +1,63 @@
+package com.example;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BuggyUserAccountManager {
+
+    private List users = new ArrayList();  // PMD: Raw use of parameterized class (no generics)
+
+    public void addUser(String username) {
+        if (username == null) {
+            return; // PMD: Avoid returning in guard clause without logging or handling
+        }
+
+        if (users.contains(username)) {
+            System.out.println("User already exists"); // PMD: Use of System.out.println
+        }
+
+        users.add(username);  // PMD: Adds anyway even if user already exists (bad logic)
+    }
+
+    public void removeUser(String username) {
+        users.remove(username);  // PMD: no null check, potential NPE
+    }
+
+    public void printUsers() {
+        for (int i = 0; i <= users.size(); i++) {  // PMD: ArrayIndexOutOfBounds
+            System.out.println(users.get(i));      // PMD: Use of System.out.println
+        }
+    }
+
+    public void setAdminPassword() {
+        String hardcoded = "admin123"; // PMD: Avoid hardcoded password (Security)
+
+        if ("admin123".equals(hardcoded)) {
+            System.out.println("Admin password is set");  // PMD: hardcoded string match
+        }
+    }
+
+    public void startThread() {
+        new Thread(new Runnable() {
+            public void run() {
+                while (true) {  // PMD: Infinite loop without exit condition
+                    System.out.println("Running"); // PMD: System.out.println inside thread
+                }
+            }
+        }).start(); // PMD: DoNotUseThreads (bad for enterprise apps)
+    }
+
+    public static void main(String[] args) {
+        BuggyUserAccountManager manager = new BuggyUserAccountManager();
+
+        manager.addUser("alice");
+        manager.addUser("bob");
+        manager.addUser("alice");
+
+        manager.removeUser(null); // PMD: no null check
+        manager.printUsers();
+
+        manager.setAdminPassword();
+        manager.startThread();
+    }
+}
