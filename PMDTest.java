@@ -3,7 +3,7 @@ import java.security.MessageDigest;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 
-public class BuggyPMDTest {
+public class PMDTest {
 
     public static int returnFromFinally() {
         try {
@@ -21,7 +21,7 @@ public class BuggyPMDTest {
         } catch (Exception e) {
         }
 
-        // ✅ Fixed usage here
+        // Fixed usage here
         System.out.println(returnFromFinally());
 
         String result = "";
