@@ -3,20 +3,20 @@ package com.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PMDTest {
+public class BugComparisonExample {
 
-    private List users = new ArrayList(); // SpotBugs: unchecked generic use
+    private List<String> users = new ArrayList<>(); // Raw type fixed to compile
 
     public void addUser(String username) {
         if (username == null) {
-            return; // PMD: guard clause without handling
+            return; // PMD: guard clause with no error handling
         }
 
         if (users.contains(username)) {
-            System.out.println("User already exists"); // PMD: System.out.println
+            System.out.println("User already exists"); // PMD: Avoid System.out
         }
 
-        users.add(username); // PMD: logical error (duplicate allowed)
+        users.add(username); // Logic flaw: still adds duplicate
     }
 
     public void removeUser(String username) {
@@ -24,29 +24,30 @@ public class PMDTest {
     }
 
     public void printUsers() {
-        for (int i = 0; i <= users.size(); i++) { // PMD & SpotBugs: off-by-one (ArrayIndexOutOfBounds)
+        for (int i = 0; i <= users.size(); i++) { // PMD & SpotBugs: off-by-one
             System.out.println(users.get(i));     // PMD: System.out.println
         }
     }
 
     public void useHardcodedPassword() {
-        String password = "admin123"; // PMD & SpotBugs: hardcoded credential
+        String password = "admin123"; // PMD/SpotBugs: hardcoded password
 
-        if (password.equals("admin123")) {
+        if ("admin123".equals(password)) {
             System.out.println("Logged in"); // PMD: System.out
         }
     }
 
     public void startBadThread() {
         new Thread(() -> {
-            while (true) { // PMD: infinite loop
-                System.out.println("Running..."); // PMD: inside thread
+            while (true) {
+                System.out.println("Running..."); // Infinite loop + System.out
+                break; // Added just so it doesn’t actually run forever in case of test
             }
-        }).start(); // SpotBugs: Thread started but never managed
+        }).start();
     }
 
     public static void main(String[] args) {
-        PMDTest manager = new PMDTest();
+        BugComparisonExample manager = new BugComparisonExample();
         manager.addUser("alice");
         manager.addUser("alice");
         manager.removeUser(null);
