@@ -1,20 +1,19 @@
-import java.util.ArrayList;
-
 public class PMDTest {
 
-    public void test() {
-        String password = "admin123"; // HardcodedPassword
-        System.out.println("Logging in..."); // SystemPrintln
-
-        int[] arr = {1, 2, 3};
-        for (int i = 0; i <= arr.length; i++) { // Off-by-one
-            System.out.println(arr[i]);
-        }
-
-        String unused = "I am never used"; // UnusedLocalVariable
-    }
+    // Unused constant
+    private static final String UNUSED = "I am never used";  // PMD: UnusedLocalVariable
 
     public static void main(String[] args) {
-        new PMDTest().test();
+        // Hardcoded password
+        String password = "admin123";  // PMD: HardcodedPassword
+
+        // Off-by-one loop
+        int[] numbers = {1, 2, 3};
+        for (int i = 0; i <= numbers.length; i++) {  // PMD: AvoidArrayIndexOutOfBounds
+            System.out.println(numbers[i]);          // PMD: SystemPrintln
+        }
+
+        // System.out used
+        System.out.println("End of main.");  // PMD: SystemPrintln
     }
 }
